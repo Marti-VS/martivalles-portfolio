@@ -115,9 +115,8 @@ export const content: Content = {
   profile: {
     name: 'Martí Vallès Sala',
     firstName: 'Martí',
-    // 👉 EDITA: tu titular / rol
-    role: 'Desarrollador · Ingeniero · Creador de mundos digitales',
-    location: 'Catalunya, España',
+    role: 'Desarrollador Full-stack · apasionado del front-end y la UI',
+    location: 'Barcelona, Catalunya, España',
     // 👉 EDITA: email de contacto público (o deja el de abajo)
     email: 'marti6727@gmail.com',
     linkedin:
@@ -129,76 +128,124 @@ export const content: Content = {
   /* ----------------------------------------------------------------- Sobre mí */
   about: {
     heading: 'Sobre mí',
-    // 👉 EDITA: tu biografía real. Esto es un placeholder.
     paragraphs: [
-      'Soy Martí Vallès Sala, desarrollador e ingeniero apasionado por construir productos digitales que combinan ingeniería sólida con experiencias bonitas. Disfruto tanto resolviendo problemas complejos de backend como puliendo cada detalle de una interfaz.',
-      'A lo largo de los años he trabajado en webs corporativas, juegos, herramientas internas y software industrial. Me gusta entender el problema de raíz, elegir bien las herramientas y dejar las cosas mejor de como las encontré.',
-      'Cuando no estoy delante de una pantalla, me encontrarás en la montaña: el senderismo es mi forma de desconectar, ganar perspectiva y volver con ideas frescas.',
+      'Apasionado desarrollador web: al igual que cuando me enfrento a una montaña, encuentro mi verdadera pasión en la escalada del desarrollo front-end. Con una mochila llena de habilidades full-stack, he optado por ascender hacia las cumbres del diseño de interfaces de usuario atractivas y funcionales.',
+      'Navego con confianza por los senderos de los lenguajes de programación web, me apoyo en los sólidos pasos de los frameworks y abrazo las herramientas tecnológicas más modernas. Como un excursionista en equipo, disfruto colaborando con personas de diversos campos para crear soluciones digitales innovadoras que impulsen el crecimiento de las empresas.',
+      'Como escalador de problemas creativos, siempre busco las rutas más eficientes para mejorar la experiencia de usuario y la funcionalidad de los productos digitales, y me mantengo al día de las últimas tendencias y avances del mundo del desarrollo web.',
     ],
     interests: [
       'Senderismo y montaña',
-      'Desarrollo web y 3D',
-      'Ingeniería y automatización industrial',
-      'Diseño de producto',
+      'Escalada',
+      'Desarrollo front-end y UI',
+      'Trabajo en equipo multidisciplinar',
+      'Nuevas tecnologías web',
     ],
     planetTeaser:
       'Un mundo de montañas. Aquí vive quién soy y lo que me mueve.',
   },
 
   /* --------------------------------------------------------------- Cronología */
-  // 👉 EDITA: tus estudios y proyectos reales, en orden cronológico (lo más reciente arriba).
   timeline: [
     {
-      period: '2024',
-      title: 'aggity',
-      subtitle: 'Software y plataforma tecnológica',
+      period: '2025 – actualidad',
+      title: 'Aggity',
+      subtitle: 'Full-stack Developer',
       description:
-        'Desarrollo dentro del ecosistema tecnológico de aggity, trabajando en soluciones de software a escala empresarial.',
+        'Desarrollo full-stack en aggity, empresa de transformación digital e IA. Jornada completa, híbrido desde Barcelona.',
       kind: 'trabajo',
       projectId: 'aggity',
     },
     {
-      period: '2023',
-      title: 'intecpro · degorg-machines',
-      subtitle: 'Software para maquinaria industrial',
+      period: '2025',
+      title: 'dvitae',
+      subtitle: 'Full-stack Developer · rebranding',
       description:
-        'Webs y herramientas para maquinaria del sector del vino y packaging (degorg, degorgel, giropack, formapack).',
-      kind: 'proyecto',
+        'Rebranding completo de la web de mi tío con Astro, React, Tailwind, Three.js y varias APIs, desplegada en Vercel.',
+      kind: 'trabajo',
+      projectId: 'dvitae',
+    },
+    {
+      period: '2024',
+      title: 'Intecpro & Solutions',
+      subtitle: 'Full-stack Developer',
+      description:
+        'Web dinámica intecpro.net con un gestor de contenidos propio (TursoDB + Firebase) y renderizado en servidor (SSR).',
+      kind: 'trabajo',
       projectId: 'intecpro',
+    },
+    {
+      period: '2024',
+      title: 'DEGORG MACHINES',
+      subtitle: 'Frontend Developer',
+      description:
+        'Rebranding de degorg.com con Astro. Mi primera web multi-idioma.',
+      kind: 'trabajo',
+      projectId: 'degorg-machines',
+    },
+    {
+      period: '2024 – 2026',
+      title: 'Grado en Ingeniería',
+      subtitle: 'Universitat Oberta de Catalunya (UOC)',
+      description:
+        "Estudios universitarios de ingeniería (Engineer's degree) en la UOC.",
+      kind: 'estudios',
+    },
+    {
+      period: '2024 – actualidad',
+      title: 'KnowMe',
+      subtitle: 'Creador de portfolios web',
+      description:
+        'Plataforma (MVP) para que cualquiera cree y publique su portfolio web. Proyecto asociado al Institut Pedralbes.',
+      kind: 'proyecto',
+      projectId: 'knowme',
     },
     {
       period: '2023',
       title: 'MathBattle',
       subtitle: 'Juego web de matemáticas',
       description:
-        'Un juego/web donde las matemáticas se vuelven una batalla. Animaciones de símbolos y mecánicas en tiempo real.',
+        'Juego competitivo de cálculo mental hecho en el ciclo de DAM (Vue.js + Node.js).',
       kind: 'proyecto',
       projectId: 'mathbattle',
     },
     {
-      period: '2022',
-      title: 'KnowMe',
-      subtitle: 'Proyecto web interactivo',
+      period: '2023 – 2024',
+      title: 'Blunèrgia',
+      subtitle: 'Junior Full Stack Developer',
       description:
-        'Una pequeña galaxia de información personal con micro-interacciones y efectos de partículas.',
-      kind: 'proyecto',
-      projectId: 'knowme',
+        'Desarrollo full-stack a jornada parcial (remoto) durante 10 meses.',
+      kind: 'trabajo',
     },
     {
-      period: '2022',
-      title: 'dvitae',
-      subtitle: 'Web para un cliente (mi tío)',
+      period: '2023 – 2024',
+      title: 'CFGS Desarrollo de Aplicaciones Multiplataforma',
+      subtitle: 'Institut Pedralbes (DAM)',
       description:
-        'Página web con una identidad visual de cubo y circuitos. Mi primer encargo real para un cliente.',
-      kind: 'proyecto',
-      projectId: 'dvitae',
+        'Ciclo Formativo de Grado Superior en desarrollo de aplicaciones multiplataforma.',
+      kind: 'estudios',
     },
     {
-      period: '2020 – 2024',
-      title: 'Estudios de Ingeniería / Informática',
-      subtitle: '👉 EDITA: tu titulación y centro',
+      period: '2023',
+      title: 'CodeXpert',
+      subtitle: 'Proyecto final de grado superior',
       description:
-        'Formación en ingeniería y desarrollo de software. Aquí van tu grado, ciclo o universidad reales.',
+        'Proyecto final de CFGS como team leader: front-end en React y DevOps para subirlo a producción (dominio propio + HTTPS).',
+      kind: 'proyecto',
+    },
+    {
+      period: '2022 – 2023',
+      title: 'Datapta',
+      subtitle: 'Frontend Developer (prácticas)',
+      description:
+        'Prácticas liderando un equipo de front-end en React: desarrollo de la página principal y de pagos.',
+      kind: 'trabajo',
+    },
+    {
+      period: '2021 – 2023',
+      title: 'CFGS Desarrollo de Aplicaciones Web',
+      subtitle: 'Institut Pedralbes (DAW)',
+      description:
+        'Ciclo Formativo de Grado Superior orientado a desarrollo web: HTML, CSS, JS, Vue, React, PHP/Laravel, MySQL/MongoDB, Node.js, SCRUM, Figma…',
       kind: 'estudios',
     },
   ],
@@ -218,20 +265,20 @@ export const content: Content = {
     {
       id: 'dvitae',
       name: 'dvitae',
-      tagline: 'Web a medida con alma de circuito',
-      year: '2022',
-      role: 'Diseño y desarrollo web',
+      tagline: 'Rebranding full-stack con alma de circuito',
+      year: '2025',
+      role: 'Desarrollo full-stack · rebranding completo',
       summary:
-        'Web para Vitae (tecnología de seguridad, de mi tío) con su identidad: un cubo 3D blanco de circuitos rojos hecho con Three.js.',
+        'Rebranding completo de la web de mi tío (Vitae): un rediseño full-stack moderno con un cubo 3D de circuitos hecho en Three.js.',
       description: [
-        'dvitae fue mi primer encargo real para un cliente: la web de la empresa de mi tío, Vitae, dedicada a la tecnología aplicada a la seguridad (videovigilancia, domótica, control de accesos y alarmas).',
-        'El sello de la web es un cubo 3D blanco con aristas rojas y circuitos por los que viajan pulsos de luz, modelado con Three.js sobre Astro. Por eso en el universo dvitae es un cubo con circuitos vivos.',
+        'dvitae nació de un encargo de mi tío: su web estaba totalmente desfasada y me pidió renovarla. Hice un rebranding completo, de arriba abajo, con un stack moderno.',
+        'Lo construí con Astro y React, estilado con Tailwind CSS, con un cubo 3D de circuitos en Three.js y físicas con Matter.js. Integré Resend (contacto), Google Calendar API (agenda) y OpenWeatherMap API (el tiempo), y lo desplegué con Node.js en Vercel. Por eso en el universo dvitae es un cubo con circuitos vivos.',
       ],
-      technologies: ['Astro', 'Three.js', 'JavaScript', 'CSS'],
+      technologies: ['Astro', 'React', 'Tailwind CSS', 'Three.js', 'Matter.js', 'Resend API', 'Google Calendar API', 'OpenWeatherMap API', 'Node.js', 'Vercel'],
       highlights: [
-        'Cubo 3D de circuitos en Three.js',
-        'Identidad de marca aplicada a toda la web',
-        'Primer proyecto para cliente real',
+        'Rebranding completo de la web',
+        'Cubo 3D de circuitos con Three.js + Matter.js',
+        'Integraciones: Resend, Google Calendar y OpenWeatherMap',
       ],
       url: 'https://www.dvitae.com/',
       repo: '',
@@ -246,20 +293,20 @@ export const content: Content = {
     {
       id: 'knowme',
       name: 'KnowMe',
-      tagline: 'Una galaxia de quién soy',
-      year: '2022',
-      role: 'Desarrollo frontend',
+      tagline: 'Crea y publica tu portfolio web',
+      year: '2024',
+      role: 'Desarrollo full-stack',
       summary:
-        'Proyecto web interactivo: una pequeña galaxia con estrellas que reaccionan al pasar el ratón.',
+        'Un creador de portfolios web: una herramienta para que cualquiera monte y publique el suyo. Ahora mismo es un MVP funcional.',
       description: [
-        'KnowMe es una experiencia donde la información se presenta como una constelación. Las estrellas "popean" e interactúan al hacer hover.',
-        '👉 EDITA: cuenta qué es KnowMe, para qué lo hiciste y cómo conseguiste los efectos de partículas/estrellas.',
+        'KnowMe es una plataforma para crear portfolios web sin necesidad de programar. Cualquier persona puede montar el suyo y publicarlo en su propia ruta, por ejemplo knowme.cat/damiabrea.',
+        'De momento es un MVP, pero el concepto ya se entiende y funciona. Es un proyecto asociado al Institut Pedralbes, construido con React y Astro.',
       ],
-      technologies: ['JavaScript', 'Canvas / WebGL', 'CSS'],
+      technologies: ['React', 'Astro', 'JavaScript', 'CSS'],
       highlights: [
-        'Partículas y estrellas interactivas',
-        'Micro-interacciones en hover',
-        'Estética de galaxia',
+        'Creador de portfolios sin escribir código',
+        'Cada usuario en su propia ruta (knowme.cat/tu-nombre)',
+        'MVP funcional y publicable',
       ],
       url: 'https://knowme.cat/',
       repo: '',
@@ -278,18 +325,18 @@ export const content: Content = {
       year: '2023',
       role: 'Desarrollo full-stack',
       summary:
-        'Juego web de matemáticas con un anillo de símbolos que orbita y efectos en tiempo real.',
+        'Juego web competitivo de matemáticas: dos alumnos se enfrentan resolviendo operaciones y gana quien acierta antes.',
       description: [
-        'MathBattle convierte el cálculo mental en un duelo. La web tiene un anillo de símbolos matemáticos que orbita y se dispara con cada jugada.',
-        '👉 EDITA: describe las mecánicas, el modo de juego y cómo está construido por dentro.',
+        'MathBattle convierte el cálculo mental en un duelo. Lo hice durante el ciclo de DAM para motivar a los alumnos de PFI del Institut Pedralbes: dos jugadores compiten resolviendo operaciones matemáticas y gana el más rápido.',
+        'Está construido con Vue.js en el front y Node.js en el back, con la partida en tiempo real. En el universo, su anillo de símbolos matemáticos orbita y se dispara con cada jugada.',
       ],
-      technologies: ['JavaScript', 'React', 'Node.js'],
+      technologies: ['Vue.js', 'Node.js', 'JavaScript'],
       highlights: [
-        'Mecánica de batalla matemática',
+        'Duelo de cálculo mental en tiempo real',
+        'Proyecto del ciclo de DAM (Institut Pedralbes)',
         'Anillo de símbolos animado',
-        'Tiempo real',
       ],
-      url: 'http://mathbattle.duckdns.org:8080/',
+      url: 'https://mathbattle-nine.vercel.app/',
       repo: '',
       planet: {
         kind: 'mathbattle',
@@ -301,21 +348,21 @@ export const content: Content = {
     },
     {
       id: 'intecpro',
-      name: 'Intecpro',
-      tagline: 'Software para maquinaria del vino',
-      year: '2023',
-      role: 'Desarrollo web',
+      name: 'Intecpro Solutions',
+      tagline: 'Web dinámica con gestor de contenidos a medida',
+      year: '2024',
+      role: 'Desarrollo full-stack',
       summary:
-        'Web/herramienta para Intecpro: maquinaria industrial del sector vinícola, con su botella de vino característica.',
+        'La web de Intecpro & Solutions (intecpro.net): una web dinámica con un gestor de contenidos propio, hecho de cero, con back-end y renderizado en servidor.',
       description: [
-        'Intecpro fabrica maquinaria para el sector del vino. Construí su presencia digital alrededor de las máquinas y de una botella de vino que es parte de la marca.',
-        '👉 EDITA: detalla qué hiciste para Intecpro, qué máquinas y procesos cubría y el stack técnico.',
+        'Para Intecpro & Solutions (la misma empresa que degorg) desarrollé intecpro.net, esta vez con una parte de back-end completa. Les creé de cero un gestor de contenidos para que pudieran publicar artículos 100% personalizados.',
+        'Usé TursoDB y Firebase para los datos y el CMS, sobre Astro. Al ser una web dinámica, la desplegué con Server Side Rendering (SSR).',
       ],
-      technologies: ['HTML', 'CSS', 'JavaScript'],
+      technologies: ['Astro', 'TursoDB', 'Firebase', 'Node.js', 'SSR'],
       highlights: [
-        'Catálogo de maquinaria industrial',
-        'Identidad del sector vinícola',
-        'Diseño corporativo',
+        'Gestor de contenidos a medida, hecho de cero',
+        'Back-end con TursoDB + Firebase',
+        'Renderizado en servidor (SSR)',
       ],
       url: 'https://intecpro.net/',
       repo: '',
@@ -329,21 +376,21 @@ export const content: Content = {
     },
     {
       id: 'degorg-machines',
-      name: 'degorg-machines',
-      tagline: 'Cuatro marcas, una familia de máquinas',
-      year: '2023',
-      role: 'Desarrollo web',
+      name: 'Degorg Machines',
+      tagline: 'Rebranding multi-idioma con Astro',
+      year: '2024',
+      role: 'Desarrollo front-end',
       summary:
-        'Luna de Intecpro con las 4 marcas de maquinaria de cava: degorg (naranja), degorgel (azul), giropack (rojo) y formapack (azul claro).',
+        'Rebranding de la web de DEGORG MACHINES: mi primera web multi-idioma, hecha con Astro. Un trabajo del que estoy especialmente orgulloso.',
       description: [
-        'degorg reúne cuatro líneas de maquinaria para el método tradicional del cava, cada una con el color de su logo: degorg (naranja), degorgel (azul), giropack (rojo) y formapack (azul claro). En el universo es una luna que orbita Intecpro, dividida en esos 4 colores.',
-        '👉 EDITA: explica las cuatro marcas, qué hace cada máquina y cómo organizaste el sitio.',
+        'En DEGORG MACHINES confiaron en mí para renovar por completo su página. Hice el rebranding con Astro, HTML, CSS y JavaScript.',
+        'Fue mi primera web multi-idioma y le tengo un cariño especial. En el universo es una luna que orbita a Intecpro, dividida en los colores de sus marcas.',
       ],
-      technologies: ['HTML', 'CSS', 'JavaScript'],
+      technologies: ['Astro', 'HTML', 'CSS', 'JavaScript'],
       highlights: [
-        'Cuatro marcas: degorg, degorgel, giropack, formapack',
-        'Color por marca: naranja, azul, rojo, azul claro',
-        'Catálogo unificado',
+        'Mi primera web multi-idioma',
+        'Rebranding completo con Astro',
+        'Luna que orbita el planeta Intecpro',
       ],
       url: 'https://degorg.com/',
       repo: '',
@@ -358,23 +405,23 @@ export const content: Content = {
     },
     {
       id: 'aggity',
-      name: 'aggity',
+      name: 'Aggity',
       tagline: 'Tecnología empresarial que echa chispas',
-      year: '2024',
-      role: 'Desarrollo de software',
+      year: '2025',
+      role: 'Full-stack Developer',
       summary:
-        'Planeta de energía con la identidad de aggity: azul marino corporativo con descargas y chispas cian, muy tecnológico.',
+        'Mi trabajo actual: desarrollo full-stack en aggity, empresa de transformación digital e IA, desde Barcelona en modelo híbrido.',
       description: [
-        'aggity es una empresa de transformación digital e IA. Su planeta es un núcleo azul marino hipertecnológico que late y echa chispas y arcos eléctricos cian sin parar.',
-        '👉 EDITA: cuenta tu trabajo en aggity, en qué proyectos participaste y con qué tecnologías.',
+        'aggity es una empresa de transformación digital e inteligencia artificial. Desde junio de 2025 formo parte de su equipo como desarrollador full-stack, a jornada completa y en modelo híbrido desde Barcelona.',
+        'Su planeta es un núcleo azul marino hipertecnológico que late y echa chispas y arcos eléctricos cian sin parar.',
       ],
       technologies: ['TypeScript', 'React', 'Cloud'],
       highlights: [
-        'Software empresarial a escala',
-        'Identidad tecnológica',
-        'Trabajo en equipo',
+        'Mi trabajo actual (desde jun. 2025)',
+        'Desarrollo full-stack',
+        'Barcelona · híbrido · jornada completa',
       ],
-      url: 'https://www.aggity.com', // 👉 EDITA si la URL es otra
+      url: 'https://www.aggity.com',
       repo: '',
       planet: {
         kind: 'aggity',
