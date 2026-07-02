@@ -3,10 +3,12 @@ import { useFrame } from '@react-three/fiber';
 import { Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 import type { NavTarget } from './types';
+import type { IntroState } from './intro';
 
 interface Props {
   navTarget: React.RefObject<NavTarget>;
   shipPos: React.RefObject<THREE.Vector3>;
+  intro: React.RefObject<IntroState>;
 }
 
 /**
@@ -14,7 +16,7 @@ interface Props {
  * hasta el punto marcado, con un marcador anillado pulsante en el destino.
  * Se desvanece cuando la nave llega.
  */
-export default function RouteLine({ navTarget, shipPos }: Props) {
+export default function RouteLine({ navTarget, shipPos, intro }: Props) {
   const markerRef = useRef<THREE.Group>(null);
   const markerMat = useRef<THREE.MeshBasicMaterial>(null);
 
@@ -58,7 +60,7 @@ export default function RouteLine({ navTarget, shipPos }: Props) {
     line.computeLineDistances();
 
     const dist = a.distanceTo(b);
-    const show = dist > 1.4;
+    const show = intro.current!.phase === 'done' && dist > 1.4;
     const pulse = 0.6 + Math.sin(state.clock.elapsedTime * 4) * 0.2;
     mat.opacity += ((show ? 0.55 : 0) - mat.opacity) * 0.15;
 

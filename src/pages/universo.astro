@@ -1,19 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Universe from '../components/universe/Universe';
+import LoaderRocket from '../components/universe/LoaderRocket';
 ---
 
 <Layout
   title="Universo · Martí Vallès Sala"
   description="Pilota una nave y explora los proyectos de Martí Vallès Sala como planetas en un universo 3D."
 >
-  <!-- Pantalla de entrada: salto a la velocidad de la luz mientras carga el 3D.
-       El componente Universe la cierra (window.__finishWarp) al montarse. -->
-  <div id="warp-loader" class="fixed inset-0 z-[60] bg-[#04050d] transition-opacity">
-    <canvas id="warp-canvas" class="h-full w-full"></canvas>
+  <!-- Pantalla de entrada: warp (2D) mientras carga el 3D. Cuando termina, el
+       MISMO cohete 3D (LoaderRocket) sube al centro sobre el warp, flash a blanco
+       y se revela el universo. El componente Universe arranca todo (window.__finishWarp). -->
+  <div id="warp-loader" class="fixed inset-0 z-[60] bg-[#04050d]">
+    <canvas id="warp-canvas" class="absolute inset-0 h-full w-full"></canvas>
+    <div id="warp-rocket" class="absolute inset-0">
+      <LoaderRocket client:only="react" />
+    </div>
     <div id="warp-flash" class="pointer-events-none absolute inset-0 bg-white opacity-0"></div>
     <p
-      class="font-display absolute bottom-16 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.4em] text-white/80"
+      id="warp-text"
+      class="font-display absolute bottom-16 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.4em] text-white/80 transition-opacity duration-300"
     >
       Entrando al universo…
     </p>
@@ -26,13 +32,18 @@ import Universe from '../components/universe/Universe';
       const overlay = document.getElementById('warp-loader');
       const canvas = document.getElementById('warp-canvas');
       const flash = document.getElementById('warp-flash');
+      const text = document.getElementById('warp-text');
       if (!overlay || !canvas) return;
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (reduce) {
         window.__finishWarp = () => {
-          overlay.remove();
+          window.__warpRocket = true;
+          window.__shipArrived = true;
+          window.__warpReveal = true;
           window.__warpDone = true;
+          overlay.style.pointerEvents = 'none';
+          overlay.style.display = 'none';
         };
         return;
       }
@@ -64,39 +75,18 @@ import Universe from '../components/universe/Universe';
         hue: 210 + Math.random() * 110,
       }));
 
-      const start = performance.now();
-      let last = start;
-      const MIN = 1500; // ms mínimo de salto antes de revelar
-      let finishing = false;
-      let finishAt = 0;
-      window.__finishWarp = () => {
-        if (finishing) return;
-        finishing = true;
-        finishAt = Math.max(performance.now(), start + MIN);
-      };
+      const smooth = (t) => t * t * (3 - 2 * t); // smoothstep
 
-      const frame = (now) => {
-        const dt = Math.min(0.05, (now - last) / 1000); // normalizado por tiempo
-        last = now;
-        const tIn = Math.min(1, (now - start) / 900);
-        const ease = tIn * tIn * (3 - 2 * tIn); // suave (smoothstep)
-        let warp = 0.5 + ease * 0.9; // velocidad calmada (~1.4)
-        let closing = -1;
-        if (finishing && now >= finishAt) {
-          closing = Math.min(1.4, (now - finishAt) / 750);
-          warp += Math.min(2.2, closing * 3); // aceleración suave solo al cerrar
-        }
-
+      const drawStars = (warp, dt) => {
         ctx.fillStyle = 'rgba(4,5,13,0.32)';
         ctx.fillRect(0, 0, w, h);
         ctx.lineCap = 'round';
-        const innerR = maxR * 0.16; // radio del núcleo vacío
+        const innerR = maxR * 0.16;
         for (const s of stars) {
           const sv = s.v * warp * 52 * dpr; // px/seg
           s.d += sv * dt;
-          // estela proporcional a la velocidad y a la distancia (perspectiva de túnel)
           const len = sv * 0.045 * (0.5 + s.d / maxR);
-          if (s.d > maxR + len) s.d = innerR + Math.random() * maxR * 0.06; // reaparece en el anillo, no en el centro
+          if (s.d > maxR + len) s.d = innerR + Math.random() * maxR * 0.06;
           const c = Math.cos(s.a);
           const sn = Math.sin(s.a);
           ctx.strokeStyle = 'hsla(' + s.hue + ',100%,78%,0.85)';
@@ -106,17 +96,80 @@ import Universe from '../components/universe/Universe';
           ctx.lineTo(cx + c * (s.d - len), cy + sn * (s.d - len));
           ctx.stroke();
         }
+      };
 
-        if (closing >= 0) {
-          if (flash) flash.style.opacity = String(Math.max(0, Math.sin(Math.min(1, closing) * Math.PI)) * 0.85);
-          overlay.style.opacity = String(Math.max(0, 1 - Math.max(0, closing - 0.5) / 0.5));
-          if (closing >= 1.3) {
+      // -------------------------------------------------------- Máquina de estados
+      //  warp → rocket (el cohete 3D sube al centro) → flash (a blanco) → reveal (a 3D)
+      const start = performance.now();
+      let last = start;
+      const MIN = 1500; // ms mínimo de warp antes de lanzar el cohete
+      const ROCKET_TIMEOUT = 3200; // por si el cohete 3D no avisa (fallback)
+      const FLASH_DUR = 320; // a blanco
+      const REVEAL_DUR = 620; // blanco → universo 3D
+      let state = 'warp';
+      let stateAt = 0;
+      let finishing = false;
+      let finishAt = 0;
+      window.__finishWarp = () => {
+        if (finishing) return;
+        finishing = true;
+        finishAt = Math.max(performance.now(), start + MIN);
+      };
+
+      const frame = (now) => {
+        const dt = Math.min(0.05, (now - last) / 1000);
+        last = now;
+        const tIn = Math.min(1, (now - start) / 900);
+        const ease = tIn * tIn * (3 - 2 * tIn);
+        let warp = 0.5 + ease * 0.9; // crucero ~1.4
+
+        // warp → rocket cuando ya ha cargado y pasó el mínimo: lanza el cohete 3D
+        if (state === 'warp' && finishing && now >= finishAt) {
+          state = 'rocket';
+          stateAt = now;
+          window.__warpRocket = true; // el LoaderRocket 3D empieza a subir
+          if (text) text.style.opacity = '0';
+        }
+
+        if (state === 'rocket') {
+          drawStars(warp, dt);
+          // El cohete 3D sube por encima (canvas transparente). Esperamos su aviso.
+          if (window.__shipArrived || now - stateAt > ROCKET_TIMEOUT) {
+            state = 'flash';
+            stateAt = now;
+          }
+        } else if (state === 'flash') {
+          const p = Math.min(1, (now - stateAt) / FLASH_DUR);
+          warp += p * 2.4; // fogonazo de warp al llegar
+          drawStars(warp, dt);
+          if (flash) flash.style.opacity = String(smooth(p));
+          if (p >= 1) {
+            // Pide a la escena 3D revelar la nave ya en el centro.
+            window.__warpReveal = true;
+            state = 'reveal';
+            stateAt = now;
+            overlay.style.transition = 'none';
+            if (flash) flash.style.opacity = '1';
+          }
+        } else if (state === 'reveal') {
+          const p = Math.min(1, (now - stateAt) / REVEAL_DUR);
+          // Blanco → universo 3D: se desvanece todo el loader (incluido el flash).
+          overlay.style.opacity = String(1 - p);
+          if (p >= 1) {
             window.removeEventListener('resize', resize);
-            window.__warpDone = true;
-            overlay.remove();
+            window.__warpDone = true; // el LoaderRocket 3D se autodesmonta
+            overlay.style.pointerEvents = 'none';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+              overlay.style.display = 'none';
+            }, 400);
             return;
           }
+        } else {
+          // 'warp': solo estrellas
+          drawStars(warp, dt);
         }
+
         requestAnimationFrame(frame);
       };
       requestAnimationFrame(frame);

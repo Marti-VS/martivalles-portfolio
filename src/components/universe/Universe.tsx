@@ -5,14 +5,16 @@ import * as THREE from 'three';
 import Scene from './Scene';
 import { content } from '../../data/content';
 import type { NavTarget, PlanetApproach } from './types';
+import { SHIP_ARRIVE, type IntroState } from './intro';
 
 export default function Universe() {
   const navTarget = useRef<NavTarget>({
-    pos: new THREE.Vector3(0, 1, 10),
+    pos: SHIP_ARRIVE.clone(),
     approach: null,
   });
-  const shipPos = useRef(new THREE.Vector3(0, 0, 18));
+  const shipPos = useRef(SHIP_ARRIVE.clone());
   const shipVel = useRef(new THREE.Vector3());
+  const intro = useRef<IntroState>({ phase: 'wait', t: 0 });
   const camRef = useRef<THREE.Camera | null>(null);
   const elRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -123,6 +125,7 @@ export default function Universe() {
           navTarget={navTarget}
           shipPos={shipPos}
           shipVel={shipVel}
+          intro={intro}
           onApproach={handleApproach}
           onArrive={handleArrive}
           onHover={setHoveredInfo}

@@ -45,12 +45,21 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--color-void);
   color: var(--color-starlight);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+}
+
+/* El fondo oscuro va SOLO en <html> (capa base / fallback). El <body> debe
+   ser transparente: si no, su fondo opaco tapa la nebulosa y las estrellas,
+   que se pintan con z-index negativo detrás del contenido. */
+html {
+  background-color: var(--color-void);
+}
+body {
+  background-color: transparent;
 }
 
 ::selection {
@@ -153,6 +162,31 @@ body {
   }
   50% {
     opacity: 1;
+  }
+}
+
+/* ---- Reveal al hacer scroll (activado por IntersectionObserver) ---------- */
+/* Solo se ocultan si hay JS (clase .js). El JS les añade .reveal-in al entrar
+   en pantalla y luego retira el atributo para no bloquear efectos hover. */
+.js [data-reveal],
+.js [data-reveal-item] {
+  opacity: 0;
+  transform: translateY(42px);
+  transition:
+    opacity 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+}
+.js [data-reveal].reveal-in,
+.js [data-reveal-item].reveal-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

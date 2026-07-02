@@ -17,11 +17,13 @@ import DegorgMoon from './planets/DegorgMoon';
 import AggityPlanet from './planets/AggityPlanet';
 
 import type { ApproachFn, NavTarget, PlanetApproach } from './types';
+import type { IntroState } from './intro';
 
 interface Props {
   navTarget: React.RefObject<NavTarget>;
   shipPos: React.RefObject<THREE.Vector3>;
   shipVel: React.RefObject<THREE.Vector3>;
+  intro: React.RefObject<IntroState>;
   onApproach: ApproachFn;
   onArrive: ApproachFn;
   onHover: (a: PlanetApproach | null) => void;
@@ -102,6 +104,7 @@ export default function Scene({
   navTarget,
   shipPos,
   shipVel,
+  intro,
   onApproach,
   onArrive,
   onHover,
@@ -124,9 +127,9 @@ export default function Scene({
       <SpaceDecor />
 
       <CaptureThree camRef={camRef} elRef={elRef} />
-      <CameraRig shipPos={shipPos} shipVel={shipVel} />
-      <Ship navTarget={navTarget} shipPos={shipPos} shipVel={shipVel} onArrive={onArrive} />
-      <RouteLine navTarget={navTarget} shipPos={shipPos} />
+      <CameraRig shipPos={shipPos} shipVel={shipVel} intro={intro} />
+      <Ship navTarget={navTarget} shipPos={shipPos} shipVel={shipVel} intro={intro} onArrive={onArrive} />
+      <RouteLine navTarget={navTarget} shipPos={shipPos} intro={intro} />
       <NavPlane navTarget={navTarget} onSteerStart={onSteerStart} />
 
       <AboutPlanet onApproach={onApproach} onHover={onHover} />

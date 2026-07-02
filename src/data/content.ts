@@ -119,11 +119,11 @@ export const content: Content = {
     role: 'Desarrollador · Ingeniero · Creador de mundos digitales',
     location: 'Catalunya, España',
     // 👉 EDITA: email de contacto público (o deja el de abajo)
-    email: 'hola@martivalles.dev',
+    email: 'marti6727@gmail.com',
     linkedin:
       'https://www.linkedin.com/in/mart%C3%AD-vall%C3%A8s-sala-75017720b',
     // 👉 EDITA: tu GitHub (deja '' si no quieres mostrarlo)
-    github: '',
+    github: 'https://github.com/Marti-VS',
   },
 
   /* ----------------------------------------------------------------- Sobre mí */

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Starfield from '../components/Starfield.astro';
+import SkyObjects from '../components/SkyObjects.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
@@ -11,6 +12,7 @@ import Footer from '../components/Footer.astro';
 
 <Layout>
   <Starfield />
+  <SkyObjects />
   <Navbar />
   <main>
     <Hero />
@@ -20,3 +22,104 @@ import Footer from '../components/Footer.astro';
   </main>
   <Footer />
 </Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------------------------------------------------------------------------
+  // Reveal al hacer scroll con IntersectionObserver (determinista y fiable).
+  // Cada elemento se muestra al entrar en pantalla; al acabar la animación se
+  // le retira el atributo para no bloquear efectos hover (p. ej. el "lift").
+  // ---------------------------------------------------------------------------
+  const revealTargets = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-reveal], [data-reveal-item]'),
+  );
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    // Sin animación: garantizamos que todo sea visible.
+    revealTargets.forEach((el) => {
+      el.removeAttribute('data-reveal');
+      el.removeAttribute('data-reveal-item');
+    });
+  } else {
+    // Pequeño escalonado dentro de cada grupo (cronología, tarjetas…).
+    document.querySelectorAll<HTMLElement>('[data-reveal-group]').forEach((group) => {
+      group
+        .querySelectorAll<HTMLElement>('[data-reveal-item]')
+        .forEach((item, i) => {
+          item.style.transitionDelay = `${Math.min(i * 85, 500)}ms`;
+        });
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          el.classList.add('reveal-in');
+          io.unobserve(el);
+          // Tras la animación, devolvemos el elemento a su estado natural.
+          window.setTimeout(() => {
+            el.style.transitionDelay = '';
+            el.classList.remove('reveal-in');
+            el.removeAttribute('data-reveal');
+            el.removeAttribute('data-reveal-item');
+          }, 1400);
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 },
+    );
+    revealTargets.forEach((el) => io.observe(el));
+  }
+
+  // ---------------------------------------------------------------------------
+  // Efectos ligados al scroll con GSAP (scrub): línea de cronología y parallax.
+  // ---------------------------------------------------------------------------
+  if (!reduce) {
+    // La línea de la cronología se "dibuja" a medida que bajas.
+    const progress = document.querySelector<HTMLElement>('[data-timeline-progress]');
+    if (progress?.parentElement) {
+      gsap.fromTo(
+        progress,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: progress.parentElement,
+            start: 'top 75%',
+            end: 'bottom 65%',
+            scrub: 0.6,
+          },
+        },
+      );
+    }
+
+    // Parallax MUY sutil de la foto, con pivote cerca de la cara y poco zoom
+    // para no recortar la cabeza.
+    gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((img) => {
+      gsap.set(img, { scale: 1.1, transformOrigin: '50% 12%' });
+      gsap.fromTo(
+        img,
+        { yPercent: -3 },
+        {
+          yPercent: 3,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        },
+      );
+    });
+
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+  }
+</script>

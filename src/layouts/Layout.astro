@@ -25,6 +25,11 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <!-- Marca que hay JS: solo entonces ocultamos los elementos con reveal.
+         Si el JS falla, el contenido se ve igualmente (sin animación). -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body>
     <slot />
