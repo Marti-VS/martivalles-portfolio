@@ -21,8 +21,10 @@ export interface IntroState {
   t: number;
 }
 
-/** Punto de entrada del cohete durante la carga: abajo, fuera de cuadro. */
-export const SHIP_START = new THREE.Vector3(0, -13, 9);
+/** Punto de entrada del cohete durante la carga: abajo y por DELANTE (cerca de
+ *  cámara), para que vuele inclinado hacia dentro del universo hasta el centro
+ *  (trayectoria tumbada, no vertical). Fuera de cuadro por abajo al empezar. */
+export const SHIP_START = new THREE.Vector3(0, -9, 12);
 /** La nave descansa en el centro del universo = centro de la pantalla. */
 export const SHIP_ARRIVE = new THREE.Vector3(0, 0, 0);
 /** Duración de la subida del cohete al centro (s). */
