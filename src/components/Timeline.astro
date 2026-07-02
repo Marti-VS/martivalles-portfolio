@@ -1,0 +1,58 @@
+---
+import { content } from '../data/content';
+const { timeline } = content;
+
+const kindStyle: Record<string, { dot: string; label: string; ring: string }> = {
+  estudios: { dot: 'bg-[var(--color-cyan)]', label: 'Estudios', ring: 'ring-[var(--color-cyan)]/40' },
+  proyecto: { dot: 'bg-[var(--color-magenta)]', label: 'Proyecto', ring: 'ring-[var(--color-magenta)]/40' },
+  trabajo: { dot: 'bg-[var(--color-gold)]', label: 'Trabajo', ring: 'ring-[var(--color-gold)]/40' },
+};
+---
+
+<section id="cronologia" class="relative mx-auto max-w-7xl scroll-mt-24 px-5 py-28 sm:px-8">
+  <div data-reveal class="mb-16">
+    <p class="font-display mb-3 text-sm uppercase tracking-[0.3em] text-[var(--color-magenta)]">
+      02 — Mi trayectoria
+    </p>
+    <h2 class="font-display text-4xl font-bold sm:text-5xl">Cronología</h2>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-stardust)]">
+      Estudios, proyectos y trabajos ordenados en el tiempo.
+    </p>
+  </div>
+
+  <ol data-reveal-group class="relative ml-3 border-l border-white/10 sm:ml-4">
+    <span
+      data-timeline-progress
+      aria-hidden="true"
+      class="absolute -left-px top-0 w-px origin-top scale-y-0 bg-gradient-to-b from-[var(--color-cyan)] via-[var(--color-magenta)] to-[var(--color-gold)]"
+      style="height:100%"
+    ></span>
+    {
+      timeline.map((entry) => {
+        const s = kindStyle[entry.kind];
+        return (
+          <li data-reveal-item class="relative mb-10 pl-8 sm:pl-10">
+            <span
+              class={`absolute -left-[7px] top-1.5 h-3.5 w-3.5 rounded-full ring-4 ring-[var(--color-void)] ${s.dot}`}
+            />
+            <div
+              class={`group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:bg-white/[0.06] hover:ring-1 ${s.ring} sm:p-6`}
+            >
+              <div class="mb-2 flex flex-wrap items-center gap-3">
+                <span class="font-display text-sm font-semibold text-[var(--color-cyan)]">
+                  {entry.period}
+                </span>
+                <span class="rounded-full border border-white/10 px-2.5 py-0.5 text-[11px] uppercase tracking-wider text-[var(--color-muted)]">
+                  {s.label}
+                </span>
+              </div>
+              <h3 class="font-display text-xl font-semibold text-white">{entry.title}</h3>
+              <p class="text-sm font-medium text-[var(--color-stardust)]">{entry.subtitle}</p>
+              <p class="mt-2 text-[var(--color-stardust)]/90">{entry.description}</p>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ol>
+</section>

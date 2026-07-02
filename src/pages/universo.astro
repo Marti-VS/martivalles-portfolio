@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Universe from '../components/universe/Universe';
+---
+
+<Layout
+  title="Universo · Martí Vallès Sala"
+  description="Pilota una nave y explora los proyectos de Martí Vallès Sala como planetas en un universo 3D."
+>
+  <!-- Pantalla de entrada: salto a la velocidad de la luz mientras carga el 3D.
+       El componente Universe la cierra (window.__finishWarp) al montarse. -->
+  <div id="warp-loader" class="fixed inset-0 z-[60] bg-[#04050d] transition-opacity">
+    <canvas id="warp-canvas" class="h-full w-full"></canvas>
+    <div id="warp-flash" class="pointer-events-none absolute inset-0 bg-white opacity-0"></div>
+    <p
+      class="font-display absolute bottom-16 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.4em] text-white/80"
+    >
+      Entrando al universo…
+    </p>
+  </div>
+
+  <Universe client:only="react" />
+
+  <script is:inline>
+    (() => {
+      const overlay = document.getElementById('warp-loader');
+      const canvas = document.getElementById('warp-canvas');
+      const flash = document.getElementById('warp-flash');
+      if (!overlay || !canvas) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduce) {
+        window.__finishWarp = () => {
+          overlay.remove();
+          window.__warpDone = true;
+        };
+        return;
+      }
+
+      const ctx = canvas.getContext('2d');
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let w = 0;
+      let h = 0;
+      let cx = 0;
+      let cy = 0;
+      let maxR = 1;
+      const resize = () => {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.width = Math.floor(window.innerWidth * dpr);
+        h = canvas.height = Math.floor(window.innerHeight * dpr);
+        cx = w / 2;
+        cy = h / 2;
+        maxR = Math.hypot(cx, cy);
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      const N = 320;
+      // Núcleo vacío: las estrellas viven entre innerR y el borde (nunca en el centro).
+      const stars = Array.from({ length: N }, () => ({
+        a: Math.random() * Math.PI * 2,
+        d: maxR * 0.16 + Math.random() * maxR * 0.84,
+        v: 2 + Math.random() * 5,
+        hue: 210 + Math.random() * 110,
+      }));
+
+      const start = performance.now();
+      let last = start;
+      const MIN = 1500; // ms mínimo de salto antes de revelar
+      let finishing = false;
+      let finishAt = 0;
+      window.__finishWarp = () => {
+        if (finishing) return;
+        finishing = true;
+        finishAt = Math.max(performance.now(), start + MIN);
+      };
+
+      const frame = (now) => {
+        const dt = Math.min(0.05, (now - last) / 1000); // normalizado por tiempo
+        last = now;
+        const tIn = Math.min(1, (now - start) / 900);
+        const ease = tIn * tIn * (3 - 2 * tIn); // suave (smoothstep)
+        let warp = 0.5 + ease * 0.9; // velocidad calmada (~1.4)
+        let closing = -1;
+        if (finishing && now >= finishAt) {
+          closing = Math.min(1.4, (now - finishAt) / 750);
+          warp += Math.min(2.2, closing * 3); // aceleración suave solo al cerrar
+        }
+
+        ctx.fillStyle = 'rgba(4,5,13,0.32)';
+        ctx.fillRect(0, 0, w, h);
+        ctx.lineCap = 'round';
+        const innerR = maxR * 0.16; // radio del núcleo vacío
+        for (const s of stars) {
+          const sv = s.v * warp * 52 * dpr; // px/seg
+          s.d += sv * dt;
+          // estela proporcional a la velocidad y a la distancia (perspectiva de túnel)
+          const len = sv * 0.045 * (0.5 + s.d / maxR);
+          if (s.d > maxR + len) s.d = innerR + Math.random() * maxR * 0.06; // reaparece en el anillo, no en el centro
+          const c = Math.cos(s.a);
+          const sn = Math.sin(s.a);
+          ctx.strokeStyle = 'hsla(' + s.hue + ',100%,78%,0.85)';
+          ctx.lineWidth = (1 + warp * 0.5) * dpr;
+          ctx.beginPath();
+          ctx.moveTo(cx + c * s.d, cy + sn * s.d);
+          ctx.lineTo(cx + c * (s.d - len), cy + sn * (s.d - len));
+          ctx.stroke();
+        }
+
+        if (closing >= 0) {
+          if (flash) flash.style.opacity = String(Math.max(0, Math.sin(Math.min(1, closing) * Math.PI)) * 0.85);
+          overlay.style.opacity = String(Math.max(0, 1 - Math.max(0, closing - 0.5) / 0.5));
+          if (closing >= 1.3) {
+            window.removeEventListener('resize', resize);
+            window.__warpDone = true;
+            overlay.remove();
+            return;
+          }
+        }
+        requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    })();
+  </script>
+
+  <style is:global>
+    html,
+    body {
+      overflow: hidden;
+      height: 100%;
+    }
+  </style>
+</Layout>

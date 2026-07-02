@@ -1,0 +1,127 @@
+---
+import { content } from '../data/content';
+
+const links = [
+  { href: '#sobre-mi', label: 'Sobre mí' },
+  { href: '#cronologia', label: 'Cronología' },
+  { href: '#proyectos', label: 'Proyectos' },
+];
+const { name } = content.profile;
+---
+
+<header
+  id="navbar"
+  class="fixed inset-x-0 top-0 z-50 transition-colors duration-500"
+>
+  <nav
+    class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8"
+  >
+    <a
+      href="#top"
+      class="font-display group flex items-center gap-2.5 text-base font-semibold tracking-tight"
+    >
+      <span
+        class="grid h-9 w-9 place-items-center rounded-xl bg-[var(--color-nebula)]/15 text-[var(--color-cyan)] ring-1 ring-white/10 transition-transform group-hover:rotate-12"
+        aria-hidden="true"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <ellipse cx="12" cy="12" rx="11" ry="3.6" stroke="currentColor" stroke-width="1.5" transform="rotate(-20 12 12)"/>
+          <circle cx="12" cy="12" r="5.4" fill="currentColor" opacity="0.9"/>
+        </svg>
+      </span>
+      <span class="hidden sm:inline">{name}</span>
+      <span class="sm:hidden">Martí V.</span>
+    </a>
+
+    <div class="hidden items-center gap-1 md:flex">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="rounded-full px-4 py-2 text-sm text-[var(--color-stardust)] transition-colors hover:bg-white/5 hover:text-white"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a
+        href="/universo"
+        data-warp
+        class="ml-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--color-nebula)] to-[var(--color-magenta)] px-5 py-2 text-sm font-semibold text-white shadow-[0_0_24px_-4px_rgba(139,92,246,0.7)] transition-transform hover:scale-[1.04]"
+      >
+        Entrar al universo
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <button
+      id="nav-toggle"
+      class="grid h-10 w-10 place-items-center rounded-lg text-white ring-1 ring-white/10 md:hidden"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div
+    id="mobile-menu"
+    class="hidden flex-col gap-1 border-t border-white/5 bg-[var(--color-void)]/95 px-5 py-4 backdrop-blur-xl md:hidden"
+  >
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          class="rounded-lg px-4 py-3 text-base text-[var(--color-stardust)] hover:bg-white/5 hover:text-white"
+          data-close
+        >
+          {l.label}
+        </a>
+      ))
+    }
+    <a
+      href="/universo"
+      data-warp
+      class="mt-2 rounded-lg bg-gradient-to-r from-[var(--color-nebula)] to-[var(--color-magenta)] px-4 py-3 text-center text-base font-semibold text-white"
+    >
+      Entrar al universo →
+    </a>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('navbar');
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 24) {
+      nav.classList.add('bg-[var(--color-void)]/70', 'backdrop-blur-xl', 'ring-1', 'ring-white/5');
+    } else {
+      nav.classList.remove('bg-[var(--color-void)]/70', 'backdrop-blur-xl', 'ring-1', 'ring-white/5');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const closeMenu = () => {
+    menu?.classList.add('hidden');
+    menu?.classList.remove('flex');
+    toggle?.setAttribute('aria-expanded', 'false');
+  };
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.contains('hidden');
+    if (open) {
+      menu?.classList.remove('hidden');
+      menu?.classList.add('flex');
+      toggle?.setAttribute('aria-expanded', 'true');
+    } else {
+      closeMenu();
+    }
+  });
+  menu?.querySelectorAll('[data-close]').forEach((a) => a.addEventListener('click', closeMenu));
+</script>

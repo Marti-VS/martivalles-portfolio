@@ -1,0 +1,169 @@
+/* ===========================================================================
+   Universo · Sistema de diseño
+   Fuentes self-hosted (Fontsource) + Tailwind v4 + tokens de tema espacial
+   =========================================================================== */
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/sora';
+@import 'tailwindcss';
+
+/* ---- Tokens de tema (Tailwind v4 @theme) -------------------------------- */
+@theme {
+  --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Sora Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Fondos */
+  --color-void: #04050d;
+  --color-space: #070a18;
+  --color-space-2: #0c1130;
+  --color-panel: #11163a;
+
+  /* Acentos galácticos */
+  --color-nebula: #8b5cf6;
+  --color-nebula-deep: #6d28d9;
+  --color-magenta: #e853c9;
+  --color-pink: #f472b6;
+  --color-cyan: #38e8ff;
+  --color-teal: #2dd4bf;
+  --color-gold: #ffd479;
+
+  /* Texto */
+  --color-starlight: #eef0ff;
+  --color-stardust: #a9b0e0;
+  --color-muted: #6b7299;
+
+  /* Animaciones */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Base --------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-void);
+  color: var(--color-starlight);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-nebula) 55%, transparent);
+  color: #fff;
+}
+
+/* Scrollbar — fina y galáctica */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-nebula) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-nebula-deep), var(--color-nebula));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--color-nebula), var(--color-cyan));
+}
+
+/* ---- Utilidades de marca ------------------------------------------------ */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Texto con degradado galáctico animado (para "Universo")
+   El primer y último color coinciden y el paneo es de exactamente un ancho
+   de imagen (200%), así el bucle es perfecto y ya no "se corta". */
+.text-galaxy {
+  background: linear-gradient(
+    100deg,
+    #c4b5fd 0%,
+    #8b5cf6 14%,
+    #e853c9 28%,
+    #f472b6 40%,
+    #38e8ff 56%,
+    #2dd4bf 68%,
+    #8b5cf6 84%,
+    #c4b5fd 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: galaxy-pan 14s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes galaxy-pan {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: -200% 50%;
+  }
+}
+
+/* Halo/resplandor que "respira" y va cambiando de color (nebulosa viva) */
+.glow-nebula {
+  animation: nebula-breathe 7s ease-in-out infinite;
+}
+
+@keyframes nebula-breathe {
+  0%,
+  100% {
+    text-shadow:
+      0 0 20px color-mix(in oklab, var(--color-nebula) 55%, transparent),
+      0 0 52px color-mix(in oklab, var(--color-magenta) 32%, transparent);
+  }
+  50% {
+    text-shadow:
+      0 0 26px color-mix(in oklab, var(--color-cyan) 55%, transparent),
+      0 0 68px color-mix(in oklab, var(--color-nebula) 45%, transparent);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Respeta usuarios con movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

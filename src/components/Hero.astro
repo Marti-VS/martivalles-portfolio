@@ -1,0 +1,98 @@
+---
+import { content } from '../data/content';
+const { name, role } = content.profile;
+---
+
+<section
+  id="top"
+  class="relative flex min-h-[100svh] flex-col items-center justify-center px-6 text-center"
+>
+  <p
+    data-hero
+    class="font-display mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.25em] text-[var(--color-stardust)] backdrop-blur"
+  >
+    <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-cyan)]"></span>
+    Portfolio
+  </p>
+
+  <h1 class="font-display mx-auto max-w-5xl text-balance font-bold leading-[1.05]">
+    <span
+      data-hero
+      class="block text-2xl text-[var(--color-stardust)] sm:text-3xl md:text-4xl"
+    >
+      Bienvenido al
+    </span>
+    <span
+      data-hero
+      class="text-galaxy glow-nebula my-1 block text-6xl sm:text-8xl md:text-[9rem] lg:text-[11rem]"
+      style="line-height:0.95"
+    >
+      Universo
+    </span>
+    <span
+      data-hero
+      class="block text-2xl text-[var(--color-starlight)] sm:text-4xl md:text-5xl"
+    >
+      de {name}
+    </span>
+  </h1>
+
+  <p
+    data-hero
+    class="mt-8 max-w-xl text-pretty text-base text-[var(--color-stardust)] sm:text-lg"
+  >
+    {role}
+  </p>
+
+  <div data-hero class="mt-12 flex flex-col items-center gap-5">
+    <a
+      href="/universo"
+      data-warp
+      class="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-[var(--color-nebula)] via-[var(--color-magenta)] to-[var(--color-cyan)] px-10 py-4 text-lg font-semibold text-white shadow-[0_0_44px_-6px_rgba(139,92,246,0.9)] transition-transform duration-300 hover:scale-[1.05]"
+    >
+      <span
+        class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+        aria-hidden="true"></span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:-translate-y-0.5 group-hover:rotate-12">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+      </svg>
+      Empezar
+    </a>
+    <p class="text-xs text-[var(--color-muted)]">
+      Sube a la nave y explora mis proyectos como planetas
+    </p>
+  </div>
+
+  <a
+    href="#sobre-mi"
+    aria-label="Bajar"
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 text-[var(--color-muted)] transition-colors hover:text-white"
+  >
+    <span class="block animate-bounce">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </span>
+  </a>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = gsap.utils.toArray<HTMLElement>('[data-hero]');
+  if (!reduce && items.length) {
+    gsap.set(items, { opacity: 0, y: 28 });
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      duration: 1.1,
+      ease: 'power3.out',
+      stagger: 0.13,
+      delay: 0.15,
+    });
+  }
+</script>

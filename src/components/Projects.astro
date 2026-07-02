@@ -1,0 +1,99 @@
+---
+import { content } from '../data/content';
+const { projects } = content;
+---
+
+<section id="proyectos" class="relative mx-auto max-w-7xl scroll-mt-24 px-5 py-28 sm:px-8">
+  <div data-reveal class="mb-16 flex flex-wrap items-end justify-between gap-6">
+    <div>
+      <p class="font-display mb-3 text-sm uppercase tracking-[0.3em] text-[var(--color-teal)]">
+        03 — Lo que he construido
+      </p>
+      <h2 class="font-display text-4xl font-bold sm:text-5xl">Proyectos</h2>
+      <p class="mt-4 max-w-2xl text-lg text-[var(--color-stardust)]">
+        Cada proyecto es un planeta. Aquí los tienes explicados; en el universo
+        puedes volar hasta ellos.
+      </p>
+    </div>
+    <a
+      href="/universo"
+      data-warp
+      class="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
+    >
+      Explorarlos en 3D →
+    </a>
+  </div>
+
+  <div data-reveal-group class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      projects.map((p) => (
+        <article
+          data-reveal-item
+          class="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20"
+          style={`--glow:${p.planet.color}`}
+        >
+          <div
+            class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-25 blur-2xl transition-opacity duration-300 group-hover:opacity-55"
+            style={`background:radial-gradient(circle, ${p.planet.color}, transparent 70%)`}
+          />
+
+          <div class="mb-5 flex items-center justify-between">
+            <div
+              class="h-12 w-12 rounded-full shadow-inner"
+              style={`background:radial-gradient(circle at 35% 30%, ${p.planet.accent}, ${p.planet.color} 65%, #02030a);box-shadow:0 0 24px -4px ${p.planet.color}`}
+              aria-hidden="true"
+            />
+            <span class="font-display text-xs uppercase tracking-widest text-[var(--color-muted)]">
+              {p.year}
+            </span>
+          </div>
+
+          <h3 class="font-display text-2xl font-bold text-white">{p.name}</h3>
+          <p class="mt-1 text-sm font-medium text-[var(--color-cyan)]">{p.tagline}</p>
+          <p class="mt-4 flex-1 text-[var(--color-stardust)]">{p.summary}</p>
+
+          <ul class="mt-4 space-y-1.5">
+            {p.highlights.slice(0, 3).map((h) => (
+              <li class="flex items-start gap-2 text-sm text-[var(--color-stardust)]/90">
+                <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full" style={`background:${p.planet.accent}`} />
+                {h}
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-5 flex flex-wrap gap-1.5">
+            {p.technologies.map((t) => (
+              <span class="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-[var(--color-stardust)]">
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <div class="mt-6 flex items-center gap-4 border-t border-white/5 pt-4">
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-[var(--color-cyan)]"
+            >
+              Ver online
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17 17 7M7 7h10v10" />
+              </svg>
+            </a>
+            {p.repo && (
+              <a
+                href={p.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-[var(--color-muted)] transition-colors hover:text-white"
+              >
+                Código
+              </a>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

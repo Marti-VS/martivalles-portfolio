@@ -1,0 +1,26 @@
+Quiero hacer un portafolio que ponga algo asi como de titulo:
+
+Bienvenido al Universo de Martí Vallès Sala
+
+Y que la palabra universo que tenga como un efecto asi especial y chulo, el titulo estaría en super grande y centrado en medio de la pantalla.
+
+Además quiero que tenga un navbar con menús a diferentes secciones como un about, una cronología de mis proyectos hechos y de mis estudios y una menú de los proyectos donde se explican más que son y como se hicieron con sus tecnologías y todo.
+
+La parte mas guay de la pagina es que quiero que al darle a un botón de "Empezar" en la landing page debajo del título chulo, quiero se carge un universo que sea totalmente en 3D y que seas una nave pequeñina que explora el universo con diferentes planetas los cuales son los distintos proyectos con sus efectos y animaciones de hover, la manera de mover el cohete seria simplemente al clicar en un planeta o en algún sitio que se mueva hacia allí, que tenga una vista panorámica de todo el universo y que al clicar tenga sus animaciones con sus propulsores y sus detalles divertidos. Cuando aterriza la nave, quiero que abra la pagina web en otra pestaña para que puedan ver esta.
+
+De los planetas me gustaria por ejemplo estas ideas:
+
+About -> un planeta donde se ven claramente unas montañas y que cuando vas encima que te muestre un texto de quien soy y de que me gusta el senderismo y todo eso
+
+dvitae -> un planeta con la forma 3D del cubo con circuitos que hice para la pagina web de mi tio.
+
+knowme -> una galaxia pequeña en la cual se vean estrellitas que van popeando todo el rato cuando le haces hover.
+
+mathbattle -> un planeta azul clarito con un anillo que va sacando símbolos matemáticos como en la pagina web.
+
+intecpro -> un planeta con diferentes maquinas y una botella de vino que va dejando caer vino por debajo.
+
+degorg-machines -> una luna de intecpro que sea muy similar con las maquinas y todo pero que tenga 4 colores, el naranja (de degorg), el azul (de degorgel), el rojo (de giropack) y el blanco (de formapack).
+
+aggity -> un planeta azulado como el color de la empresa y muy tecnologico como si estuviese sacando chispas todo el rato.
+

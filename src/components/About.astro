@@ -1,0 +1,75 @@
+---
+import { content } from '../data/content';
+const { about, profile } = content;
+---
+
+<section id="sobre-mi" class="relative mx-auto max-w-7xl scroll-mt-24 px-5 py-28 sm:px-8">
+  <div class="mb-14 flex items-end justify-between gap-6">
+    <div>
+      <p class="font-display mb-3 text-sm uppercase tracking-[0.3em] text-[var(--color-cyan)]">
+        01 — Quién soy
+      </p>
+      <h2 class="font-display text-4xl font-bold sm:text-5xl">{about.heading}</h2>
+    </div>
+  </div>
+
+  <div class="grid items-start gap-10 lg:grid-cols-[1.4fr_1fr]">
+    <div class="space-y-6">
+      {
+        about.paragraphs.map((p) => (
+          <p data-reveal class="text-lg leading-relaxed text-[var(--color-stardust)]">{p}</p>
+        ))
+      }
+
+      <div data-reveal-group class="flex flex-wrap gap-2.5 pt-2">
+        {
+          about.interests.map((i) => (
+            <span
+              data-reveal-item
+              class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[var(--color-starlight)] transition-colors hover:border-[var(--color-cyan)]/40 hover:bg-white/[0.08]"
+            >
+              {i}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Tarjeta visual: foto en la montaña -->
+    <div
+      data-reveal
+      class="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[var(--color-space-2)] to-[var(--color-void)] p-1"
+    >
+      <div class="relative overflow-hidden rounded-[1.4rem]">
+        <img
+          src="/img/marti-paisage.png"
+          alt="Martí en el Estany de la Nou, Andorra"
+          width="919"
+          height="1352"
+          loading="lazy"
+          decoding="async"
+          data-parallax
+          class="aspect-[4/5] w-full object-cover object-top brightness-[0.97] transition-[filter] duration-500 will-change-transform group-hover:brightness-110"
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-void)]/60 via-transparent to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-5">
+          <p class="text-sm text-[var(--color-stardust)]">{about.planetTeaser}</p>
+        </div>
+      </div>
+      <div class="px-5 py-4">
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Estany+de+la+Nou%2C+Andorra"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-display inline-flex items-center gap-1.5 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-cyan)]"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Estany de la Nou, Andorra
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

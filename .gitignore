@@ -1,0 +1,20 @@
+# dependencias
+node_modules/
+
+# salida de build
+dist/
+.astro/
+
+# logs y temporales
+*.log
+scratch_dev.log
+npm-debug.log*
+
+# entorno
+.env
+.env.production
+.DS_Store
+
+# editor
+.vscode/
+.idea/

@@ -1,0 +1,59 @@
+---
+import { content } from '../data/content';
+const { profile } = content;
+const year = new Date().getFullYear();
+---
+
+<footer class="relative mx-auto max-w-7xl px-5 pb-16 pt-10 sm:px-8">
+  <div
+    data-reveal
+    class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[var(--color-space-2)] to-[var(--color-void)] p-8 sm:p-12"
+  >
+    <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+      <div>
+        <h2 class="font-display text-3xl font-bold sm:text-4xl">
+          ¿Hablamos?
+        </h2>
+        <p class="mt-3 max-w-md text-[var(--color-stardust)]">
+          Siempre abierto a nuevos proyectos, colaboraciones o simplemente a
+          charlar sobre montañas y código.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href={`mailto:${profile.email}`}
+          class="rounded-full bg-gradient-to-r from-[var(--color-nebula)] to-[var(--color-magenta)] px-6 py-3 font-semibold text-white shadow-[0_0_30px_-6px_rgba(139,92,246,0.8)] transition-transform hover:scale-[1.04]"
+        >
+          {profile.email}
+        </a>
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-full border border-white/15 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/5"
+        >
+          LinkedIn
+        </a>
+        {
+          profile.github && (
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full border border-white/15 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/5"
+            >
+              GitHub
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-col items-center justify-between gap-3 text-sm text-[var(--color-muted)] sm:flex-row">
+    <p>© {year} {profile.name}. Hecho con Astro, Three.js y café.</p>
+    <a href="/universo" data-warp class="transition-colors hover:text-white">
+      Entrar al universo →
+    </a>
+  </div>
+</footer>
