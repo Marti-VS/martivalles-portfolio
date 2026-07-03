@@ -19,11 +19,15 @@ interface Props {
  *
  * Durante la intro ('wait') la cámara se queda fija encuadrando el CENTRO
  * (tapada por el loader/flash blanco). Al revelar ('settle') hace un crane desde
- * ese encuadre hasta la vista de dron. Después ('done') sigue a la nave con parallax.
+ * ese encuadre hasta la vista de dron. Después ('done') sigue a la nave con
+ * parallax y permite hacer zoom con la rueda del ratón.
  */
 const OFFSET = new THREE.Vector3(0, 48, 26);
 const FOLLOW = 0.45;
 const PARALLAX = 3.5;
+// Zoom: multiplica la distancia de la cámara al ancla (1 = vista por defecto).
+const ZOOM_MIN = 0.5; // más cerca
+const ZOOM_MAX = 1.7; // más lejos
 
 export default function CameraRig({ shipPos, shipVel, intro }: Props) {
   const { camera } = useThree();
@@ -33,14 +37,29 @@ export default function CameraRig({ shipPos, shipVel, intro }: Props) {
   const lookTarget = useMemo(() => new THREE.Vector3(), []);
   const mouse = useRef({ x: 0, y: 0 });
   const smooth = useRef({ x: 0, y: 0 });
+  const zoom = useRef(1);
+  const zoomTarget = useRef(1);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
       mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
     };
+    const onWheel = (e: WheelEvent) => {
+      // Rueda arriba = acercar; rueda abajo = alejar.
+      const factor = Math.exp(e.deltaY * 0.0012);
+      zoomTarget.current = THREE.MathUtils.clamp(
+        zoomTarget.current * factor,
+        ZOOM_MIN,
+        ZOOM_MAX,
+      );
+    };
     window.addEventListener('pointermove', onMove);
-    return () => window.removeEventListener('pointermove', onMove);
+    window.addEventListener('wheel', onWheel, { passive: true });
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('wheel', onWheel);
+    };
   }, []);
 
   useFrame((_, delta) => {
@@ -75,7 +94,9 @@ export default function CameraRig({ shipPos, shipVel, intro }: Props) {
       return;
     }
 
-    // Seguimiento normal con parallax suave de ratón.
+    // Seguimiento normal con parallax suave de ratón + zoom con la rueda.
+    zoom.current += (zoomTarget.current - zoom.current) * Math.min(1, dt * 6);
+    desired.copy(anchor).addScaledVector(OFFSET, zoom.current);
     smooth.current.x += (mouse.current.x - smooth.current.x) * Math.min(1, dt * 2);
     smooth.current.y += (mouse.current.y - smooth.current.y) * Math.min(1, dt * 2);
     desired.x += smooth.current.x * PARALLAX;
